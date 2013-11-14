@@ -1,0 +1,5 @@
+{{%FILTERS}}
+    public function up()
+    {
+        Schema::drop('{{tableName | string.plural | string.snake}}');
+    }

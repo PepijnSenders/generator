@@ -1,0 +1,9 @@
+<?php
+{{%FILTERS}}
+class {{className}} extends Eloquent {
+
+    protected $table = '{{className | string.snake | string.plural}}';
+
+    public static $rules = array();
+
+}

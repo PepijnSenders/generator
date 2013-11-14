@@ -1,0 +1,141 @@
+<?php
+{{%FILTERS}}
+class {{className}} extends BaseController {
+
+    /**
+     * {{model | string.studly}} Repository
+     *
+     * @var {{model | string.studly}}
+     */
+    protected ${{model | string.camel}};
+
+    public function __construct({{model | string.studly}} ${{model | string.camel}})
+    {
+        $this->{{model | string.camel}} = ${{model | string.camel}};
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        ${{model | string.plural | string.camel }} = {{model | string.studly}}::all();
+
+        if (empty(${{model | string.camel | string.plural}}))
+        {
+            return Response::json(array('error' => '{{model | string.snake | string.plural}}_not_found'), 404);
+        }
+
+        return Response::json(${{model | string.camel | string.plural }}, 200);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        return Response::json(array('error' => 'not_implemented'), 501);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return Response
+     */
+    public function store()
+    {
+        $input = Input::all();
+        $validation = Validator::make($input, {{model | string.studly}}::$rules);
+
+        if ($validation->passes())
+        {
+            ${{model | string.camel}} = $this->{{model | string.camel}}->create($input);
+
+            return Response::json(${{model | string.camel}}, 201);
+        }
+
+        return Response::json($validation, 400);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        ${{model | string.camel}} = {{model | string.studly}}::where('id', $id)->first();
+
+        if (empty(${{model | string.camel}}))
+        {
+            return Response::json(array('error' => '{{model | string.snake}}_not_found'), 404);
+        }
+
+        return Response::json(${{model | string.camel}}, 200);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function edit($id)
+    {
+        return Response::json(array('error' => 'not_implemented'), 501);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function update($id)
+    {
+        $input = array_except(Input::all(), '_method');
+        $validation = Validator::make($input, {{model | string.studly}}::$rules);
+
+        if ($validation->passes())
+        {
+            ${{model | string.camel}} = $this->{{model | string.camel}}->find($id);
+
+            if (empty(${{model | string.camel}}))
+            {
+                return Response::json(array('error' => '{{model | string.snake}}_not_found'), 404);
+            }
+
+            ${{model | string.camel}}->update($input);
+
+            return Response::json(${{model | string.camel}}, 200);
+        }
+
+        return Response::json($validation, 400);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        ${{model | string.camel}} = {{model | string.studly}}::where('id', $id)->first();
+
+        if (empty(${{model | string.camel}}))
+        {
+            return Response::json(array('error' => '{{model | string.snake}}_not_found'), 404);
+        }
+
+        ${{model | string.camel}}->delete();
+
+        return Response::json(array('success'), 200);
+    }
+
+}

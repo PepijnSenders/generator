@@ -1,0 +1,12 @@
+'use strict';
+{{%FILTERS}}
+angular.module('{{appName}}')
+    .directive('{{directiveName | string.camel}}', function {{directiveName | string.camel}} () {
+        return {
+            template: '',
+            restrict: 'E',
+            link: function postLink (scope, element, attrs) {
+
+            }
+        };
+    });

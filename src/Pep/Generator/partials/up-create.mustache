@@ -1,0 +1,9 @@
+{{%FILTERS}}
+    public function up()
+    {
+        Schema::create('{{tableName | string.snake | string.plural}}', function(Blueprint $table) {
+            $table->integer('id', true);
+
+            $table->timestamps();
+        });
+    }
