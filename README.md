@@ -5,7 +5,7 @@ Laravel 4 and Angular artisan generator
 
 Available generators:
 ```
-  generate
+generate
   generate:controller      Generate a new controller.
   generate:migration       Generate a new migration.
   generate:model           Generate a new model.
