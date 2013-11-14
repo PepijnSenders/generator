@@ -2,8 +2,16 @@
 {{%FILTERS}}
 class {{className}} extends Eloquent {
 
+    /**
+     * SQL Database table name
+     * @var string
+     */
     protected $table = '{{className | string.snake | string.plural}}';
 
+    /**
+     * Array of model rules
+     * @var array
+     */
     public static $rules = array();
 
 }

@@ -1,0 +1,20 @@
+<?php
+{{%FILTERS}}
+class {{className}} extends Seeder {
+
+    /**
+     * Run seed
+     * @return void
+     */
+    public function run()
+    {
+        DB::table('{{className | string.snake | string.plural}}')->truncate();
+
+        ${{className | string.camel | string.plural}} = array(
+
+        );
+
+        DB::table('{{className | string.snake | string.plural}}')->insert(${{className | string.camel | string.plural}});
+    }
+
+}
