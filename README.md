@@ -3,6 +3,16 @@ Generator
 
 Laravel 4 and Angular artisan generator
 
+Install threw composer:
+```
+composer require pep/generator
+```
+
+Add the following line to the providers array in config/app.php
+```
+'Pep\Generator\GeneratorServiceProvider',
+```
+
 Available generators:
 ```
 generate
