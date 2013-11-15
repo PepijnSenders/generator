@@ -31,6 +31,7 @@ class GeneratorServiceProvider extends ServiceProvider {
         $this->registerControllerGenerator();
         $this->registerModelGenerator();
         $this->registerMigrationGenerator();
+        $this->registerSeedGenerator();
         $this->registerAngularStructureGenerator();
         $this->registerAngularControllerGenerator();
         $this->registerAngularDirectiveGenerator();
@@ -42,6 +43,7 @@ class GeneratorServiceProvider extends ServiceProvider {
         	'generate.controller',
             'generate.model',
             'generate.migration',
+            'generate.seed',
             'generate.ng.structure',
             'generate.ng.controller',
             'generate.ng.directive',
@@ -79,7 +81,7 @@ class GeneratorServiceProvider extends ServiceProvider {
     /**
      * Register generate:model
      *
-     * @return Commands\ControllerCommand
+     * @return Commands\ModelCommand
      */
     protected function registerModelGenerator()
     {
@@ -94,7 +96,7 @@ class GeneratorServiceProvider extends ServiceProvider {
     /**
      * Register generate:migration
      *
-     * @return Commands\ControllerCommand
+     * @return Commands\MigrationCommand
      */
     protected function registerMigrationGenerator()
     {
@@ -103,6 +105,21 @@ class GeneratorServiceProvider extends ServiceProvider {
             $generator = new Generator\MigrationGenerator($app['files']);
 
             return new Command\MigrationCommand($generator);
+        });
+    }
+
+    /**
+     * Register generate:seed
+     *
+     * @return Commands\SeedCommand
+     */
+    protected function registerSeedGenerator()
+    {
+        $this->app['generate.seed'] = $this->app->share(function($app)
+        {
+            $generator = new Generator\SeedGenerator($app['files']);
+
+            return new Command\SeedCommand($generator);
         });
     }
 

@@ -1,6 +1,6 @@
 {
     "name": "pep/generator",
-    "description": "",
+    "description": "Laravel 4 and Angular artisan generator ",
     "authors": [
         {
             "name": "Pepijn Senders",

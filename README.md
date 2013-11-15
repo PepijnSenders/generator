@@ -19,6 +19,7 @@ generate
   generate:controller      Generate a new controller.
   generate:migration       Generate a new migration.
   generate:model           Generate a new model.
+  generate:seed            Generate a new seed.
   generate:ng:controller   Generate a new angular controller.
   generate:ng:directive    Generate a new angular directive.
   generate:ng:factory      Generate a new angular factory.
