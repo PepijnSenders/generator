@@ -1,0 +1,106 @@
+module.exports = function(grunt) {
+  "use strict";
+
+  // load all grunt tasks
+  grunt.loadNpmTasks('grunt-contrib-compass');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-ngmin');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+
+  var jsFiles = [
+  ];
+
+  var tmpJsFiles = [];
+  for (var i = 0; i < jsFiles.length; i++) {
+    tmpJsFiles.push('tmp/' + jsFiles[i]);
+  }
+
+  grunt.initConfig({
+
+    // SASS
+    compass: {
+      options: {
+        basePath: 'public',
+        sassDir: 'sass',
+        cssDir: 'css',
+        imagesDir: 'img',
+        fontsDir: 'fonts',
+        importPath: 'public/js/libs',
+        relativeAssets: true
+      },
+      dev: {
+        options: {
+          debugInfo: true
+        }
+      },
+      production: {
+        options: {
+          outputStyle: 'compressed',
+          noLineComments: true,
+          debugInfo: false
+        }
+      }
+    },
+
+    // Javascript
+    ngmin: {
+      main: {
+        expand: true,
+        src: jsFiles,
+        dest: 'tmp'
+      }
+    },
+
+    uglify: {
+      production: {
+        options: {
+          preserveComments: false,
+          sourceMap: 'public/js/main.min.js.map',
+          sourceMapRoot: '../../tmp/public/js',
+          sourceMapPrefix: 2,
+          sourceMappingURL: 'main.min.js.map'
+        },
+        files: {
+          'public/js/main.min.js': tmpJsFiles
+        }
+      },
+      staging: {
+        options: {
+          beautify: true,
+          mangle: false,
+          preserveComments: true,
+          sourceMap: 'public/js/main.min.js.map',
+          sourceMapRoot: '../../tmp/public/js',
+          sourceMapPrefix: 2,
+          sourceMappingURL: 'main.min.js.map'
+        },
+        files: {
+          'public/js/main.min.js': tmpJsFiles
+        }
+      }
+    },
+
+    ngtemplates: {},
+
+    watch: {
+      sass: {
+        files: 'public/sass/{,*/}*.scss',
+        tasks: ['compass']
+      },
+      scripts: {
+        files: ['public/js/{,*/}*.js']
+      },
+      views: {
+        files: ['public/{,*/}*.html']
+      },
+      options: {
+        livereload: true
+      }
+    }
+  });
+
+  grunt.registerTask('default', ['compass:dev', 'watch']);
+  grunt.registerTask('compile', ['compass:production']);
+  grunt.registerTask('staging', ['compass:production', 'ngmin', 'uglify:staging']);
+  grunt.registerTask('production', ['compass:production', 'ngmin', 'uglify:production']);
+};

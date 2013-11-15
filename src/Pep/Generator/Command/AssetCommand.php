@@ -1,25 +1,25 @@
 <?php namespace Pep\Generator\Command;
 
-use Pep\Generator\Generator\SeedGenerator;
+use Pep\Generator\Generator\AssetGenerator;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Illuminate\Support\Str;
 
-class SeedCommand extends BaseCommand {
+class AssetCommand extends BaseCommand {
 
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'generate:seed';
+    protected $name = 'generate:asset';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate a new seed.';
+    protected $description = 'Add an asset to GruntFile and assets file.';
 
     /**
      * Execute the console command.
@@ -29,18 +29,23 @@ class SeedCommand extends BaseCommand {
     public function fire()
     {
         $path = $this->getPath();
-        $className = basename($path, '.php');
-        $template = $this->option('template');
 
-        $this->printResult($this->generator->make($path, $template), $path);
-
-        if ($this->generator->updateDatabaseSeederRunMethod($className))
+        if ($this->generator->updateAssetsFile($this->argument('fileName')))
         {
-            $this->info('Updated ' . app_path('database/seeds/DatabaseSeeder.php'));
+            $this->info('Updated ' . $this->option('assetsPath'));
         }
         else
         {
-            $this->comment('Did not need to update ' . app_path('database/seeds/DatabaseSeeder.php'));
+            $this->comment('Did not need to update ' . $this->option('assetsPath'));
+        }
+
+        if ($this->generator->updateGruntFile($this->argument('fileName')))
+        {
+            $this->info('Updated ' . $this->option('gruntFilePath'));
+        }
+        else
+        {
+            $this->comment('Did not need to update ' . $this->option('gruntFilePath'));
         }
     }
 
@@ -51,7 +56,7 @@ class SeedCommand extends BaseCommand {
      */
     protected function getPath()
     {
-       return $this->option('path') . '/' . date('YmdHi') . '_' . Str::snake(Str::plural(ucwords($this->argument('name')))) . '.php';
+        return $this->option('assetsPath');
     }
 
     /**
@@ -63,9 +68,9 @@ class SeedCommand extends BaseCommand {
     {
         return array(
             array(
-                'name',
+                'fileName',
                 InputArgument::REQUIRED,
-                'Name of the seed to generate.',
+                'Name of the file to add.',
             ),
         );
     }
@@ -79,18 +84,25 @@ class SeedCommand extends BaseCommand {
     {
         return array(
             array(
-                'path',
+                'assetsPath',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                'Path to seeds directory.',
-                app_path('database/seeds'),
+                'Path to assets file. (default: app_path(\'views/assets.blade.php\'))',
+                app_path('views/assets.blade.php'),
+            ),
+            array(
+                'gruntFilePath',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Path to assets file. (default: base_path(\'GruntFile.js\'))',
+                base_path('GruntFile.js'),
             ),
             array(
                 'template',
                 null,
                 InputOption::VALUE_OPTIONAL,
                 'Path to template.',
-                __DIR__ . '/../templates/seed.mustache',
+                __DIR__ . '/../templates/asset.mustache',
             ),
         );
     }

@@ -23,15 +23,15 @@ class SeedGenerator extends AbstractGenerator {
     /**
     * Updates the DatabaseSeeder file's run method to
     * call this new seed class
-    * @return void
+    * @return boolean
     */
     public function updateDatabaseSeederRunMethod($className)
     {
-        $databaseSeederPath = app_path('/database/seeds/DatabaseSeeder.php');
+        $databaseSeederPath = app_path('database/seeds/DatabaseSeeder.php');
 
         $content = $this->fileSystem->get($databaseSeederPath);
 
-        if ( ! strpos($content, "\$this->call('{$className}');"))
+        if (!strpos($content, "\$this->call('{$className}');"))
         {
             $content = preg_replace("/(run\(\).+?)}/us", "$1\t\$this->call('{$className}');\n\t}", $content);
             return $this->fileSystem->put($databaseSeederPath, $content);

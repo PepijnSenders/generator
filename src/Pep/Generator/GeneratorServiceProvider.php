@@ -32,6 +32,9 @@ class GeneratorServiceProvider extends ServiceProvider {
         $this->registerModelGenerator();
         $this->registerMigrationGenerator();
         $this->registerSeedGenerator();
+        $this->registerGruntGenerator();
+        $this->registerAssetsGenerator();
+        $this->registerAssetGenerator();
         $this->registerAngularStructureGenerator();
         $this->registerAngularControllerGenerator();
         $this->registerAngularDirectiveGenerator();
@@ -44,6 +47,9 @@ class GeneratorServiceProvider extends ServiceProvider {
             'generate.model',
             'generate.migration',
             'generate.seed',
+            'generate.grunt',
+            'generate.assets',
+            'generate.asset',
             'generate.ng.structure',
             'generate.ng.controller',
             'generate.ng.directive',
@@ -120,6 +126,51 @@ class GeneratorServiceProvider extends ServiceProvider {
             $generator = new Generator\SeedGenerator($app['files']);
 
             return new Command\SeedCommand($generator);
+        });
+    }
+
+    /**
+     * Register generate:grunt
+     *
+     * @return Commands\GruntCommand
+     */
+    protected function registerGruntGenerator()
+    {
+        $this->app['generate.grunt'] = $this->app->share(function($app)
+        {
+            $generator = new Generator\GruntGenerator($app['files']);
+
+            return new Command\GruntCommand($generator);
+        });
+    }
+
+    /**
+     * Register generate:assets
+     *
+     * @return Commands\AssetsCommand
+     */
+    protected function registerAssetsGenerator()
+    {
+        $this->app['generate.assets'] = $this->app->share(function($app)
+        {
+            $generator = new Generator\AssetsGenerator($app['files']);
+
+            return new Command\AssetsCommand($generator);
+        });
+    }
+
+    /**
+     * Register generate:asset
+     *
+     * @return Commands\AssetCommand
+     */
+    protected function registerAssetGenerator()
+    {
+        $this->app['generate.asset'] = $this->app->share(function($app)
+        {
+            $generator = new Generator\AssetGenerator($app['files']);
+
+            return new Command\AssetCommand($generator);
         });
     }
 

@@ -1,0 +1,14 @@
+{{=<% %>=}}
+@if (file_exists(public_path('js/main.min.js')))
+{{ HTML::script('js/main.min.js?' . filemtime(public_path('js/main.min.js'))) }}
+@else
+@foreach (array('controllers', 'directives', 'services', 'models', 'filters') as $dir)
+    @if (file_exists(public_path() . '/js/' . $dir))
+        @foreach (new DirectoryIterator(public_path() . '/js/' . $dir) as $entry)
+            @if ($entry->isFile() && $entry->getExtension() === 'js')
+                {{ HTML::script("js/{$dir}/{$entry->getFilename()}?" . filemtime(public_path("/js/{$dir}/{$entry->getFilename()}"))) }}
+            @endif
+        @endforeach
+    @endif
+@endforeach
+@endif
