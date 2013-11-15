@@ -20,6 +20,9 @@ generate
   generate:migration       Generate a new migration.
   generate:model           Generate a new model.
   generate:seed            Generate a new seed.
+  generate:assets          Generate a new assets file.
+  generate:asset           Add asset to GruntFile and assets file.
+  generate:grunt           Generate a new GruntFile.
   generate:ng:controller   Generate a new angular controller.
   generate:ng:directive    Generate a new angular directive.
   generate:ng:factory      Generate a new angular factory.
