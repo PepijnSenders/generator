@@ -31,10 +31,10 @@ class MigrationGenerator extends AbstractGenerator {
     {
         $this->template = $this->fileSystem->get($template);
 
-        return $this->getMethod($template, $arguments);
+        return $this->getMethod($arguments);
     }
 
-    private function getMethod($template, $arguments)
+    private function getMethod($arguments)
     {
         switch (Str::lower($arguments['method']))
         {
@@ -75,7 +75,7 @@ class MigrationGenerator extends AbstractGenerator {
         return $this->render(array(
             'up' => $upMethod,
             'down' => $downMethod,
-            'name' => Str::studly(implode('_', array_slice(explode('_', $template), 4))),
+            'name' => Str::snake($arguments['method'] . '_' . Str::plural($arguments['tableName'])),
         ));
     }
 

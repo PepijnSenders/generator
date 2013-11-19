@@ -44,7 +44,7 @@ class MigrationCommand extends BaseCommand {
      */
     protected function getPath()
     {
-        return $this->option('path') . '/' . date('YmdHi') .
+        return $this->option('path') . '/' . date('Y_m_d_His') .
                 '_' . Str::snake($this->argument('method') . '_' .
                 Str::plural($this->argument('tableName'))) . '.php';
     }
