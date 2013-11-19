@@ -75,7 +75,7 @@ class MigrationGenerator extends AbstractGenerator {
         return $this->render(array(
             'up' => $upMethod,
             'down' => $downMethod,
-            'name' => Str::studly($arguments['method'] . '_' . Str::plural($arguments['tableName'])) . '_' . date('YmdHi'),
+            'name' => Str::studly(date('YmdHi') . '_' . $arguments['method'] . '_' . Str::plural($arguments['tableName'])),
         ));
     }
 
