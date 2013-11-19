@@ -12,6 +12,11 @@
         "mustache/mustache": "dev-master",
         "illuminate/support": "4.0.*"
     },
+    "require-dev": {
+        "mockery/mockery": "dev-master",
+        "illuminate/console": "~4",
+        "illuminate/filesystem": "~4"
+    },
     "autoload": {
         "classmap": [
         ],
