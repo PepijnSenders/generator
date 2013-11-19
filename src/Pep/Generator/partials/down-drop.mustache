@@ -1,5 +1,7 @@
 {{%FILTERS}}
     public function down()
     {
-        Schema::drop('{{tableName | string.plural | string.snake}}');
+        Schema::table('{{tableName | string.plural | string.snake}}', function(Blueprint $table) {
+
+        });
     }
