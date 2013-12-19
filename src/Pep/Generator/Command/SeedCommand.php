@@ -51,7 +51,7 @@ class SeedCommand extends BaseCommand {
      */
     protected function getPath()
     {
-       return $this->option('path') . '/' . \Str::plural(\Str::studly($this->argument('name'))) . '_' . 'Seeder' . '.php';
+       return $this->option('path') . '/' . \Str::plural(\Str::studly($this->argument('name'))) . 'Seeder' . '.php';
     }
 
     /**
