@@ -15,7 +15,7 @@ class SeedGenerator extends AbstractGenerator {
         $this->template = $this->fileSystem->get($template);
 
         return $this->render(array(
-            'className' => Str::plural($className) . '_' . date('YmdHi'),
+            'className' => \Str::plural($className) . '_' . 'Seeder',
             'model' => $className,
         ));
     }

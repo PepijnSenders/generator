@@ -8,13 +8,13 @@ class {{className}} extends Seeder {
      */
     public function run()
     {
-        DB::table('{{className | string.snake | string.plural}}')->truncate();
+        DB::table('{{model | string.snake | string.plural}}')->truncate();
 
-        ${{className | string.camel | string.plural}} = array(
+        ${{model | string.camel | string.plural}} = array(
 
         );
 
-        DB::table('{{className | string.snake | string.plural}}')->insert(${{className | string.camel | string.plural}});
+        DB::table('{{model | string.snake | string.plural}}')->insert(${{model | string.camel | string.plural}});
     }
 
 }
